@@ -1,0 +1,328 @@
+{% extends "base.html" %}
+{% block title %}Library Loan System - Home{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/style.css')}}" />
+
+
+<script>document.getElementsByTagName("html")[0].className += " js";</script>
+
+<style>
+    .buttn{
+    background-color:#51eaea;
+    margin-right: 20px;
+    margin-bottom: 10px;
+    }
+    .buttn:hover{
+    color:black;
+    margin-right: 20px;
+    margin-bottom: 10px;
+    }
+    .buttnred{
+    background-color:#ffcccb;
+    margin-right: 20px;
+    margin-bottom: 10px;
+    }
+    .buttnred:hover{
+    color:black;
+    margin-right: 20px;
+    margin-bottom: 10px;
+    }
+</style>
+<div class="site-wrap">
+    <div class="bg-light py-3">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 mb-0">
+                    <a href="/">Home</a> <span class="mx-2 mb-0">/</span>
+                    <strong class="text-black">FAQ</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<div class="site-section">
+      <div class="container">
+        <div class="row">
+          <div class="title-section text-center col-12">
+            <h2 >Top questions answered by Admin</h2>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 block-3 products-wrap">
+            <div class="nonloop-block-3 no-direction owl-carousel">
+                {% for x in toplist%}
+                 {% for a in x.get_ans() %}
+                  {% if 'Admin' in a[0] %}
+              <div class="testimony">
+                <blockquote>
+                  <p>{{x.get_question()}}</p>
+                </blockquote>
+                  <p>{{ a[1] }} <br>&mdash; {{ a[0] }}</p>
+                  {% endif %}
+                  {% endfor %}
+              </div>
+                {% endfor%}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+            <div class="container">
+        <div class="row">
+          <div class="col-lg-7 mx-auto order-lg-2 align-self-center">
+            <div class="site-block-cover-content text-center">
+
+                   <h1 style="color:black; font-size:30px;">Admin didn't answer your question? Try looking for your answers below!</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+    <section class="cd-faq js-cd-faq container max-width-md margin-top-lg margin-bottom-lg">
+        <ul class="cd-faq__categories">
+            <li><a class="cd-faq__category cd-faq__category-selected truncate" href="#basics">Basics</a></li>
+            <li><a class="cd-faq__category truncate" href="#mobile">Mobile</a></li>
+            <li><a class="cd-faq__category truncate" href="#account">Account</a></li>
+            <li><a class="cd-faq__category truncate" href="#payments">Payments</a></li>
+            <li><a class="cd-faq__category truncate" href="#privacy">Privacy</a></li>
+            <li><a class="cd-faq__category truncate" href="#delivery">Delivery</a></li>
+        </ul> <!-- cd-faq__categories -->
+
+
+
+        <div class="cd-faq__items">
+            <ul id="basics" class="cd-faq__group">
+                <li class="cd-faq__title"><h2>Basics</h2></li>
+                {% for x in basic %}
+                <li class="cd-faq__item">
+                    <a class="cd-faq__trigger" href="#0"><span>{{ x.get_question() }}<br>Asked by : {{ x.get_firstName()}}</span></a>
+                    <div class="cd-faq__content">
+              <div class="text-component">
+                  <table>
+                      <tr><td><a href="/upvote/{{ x.get_key() }}"><img src="static/images/greenarrow.png" style="height:20px; width:20px; margin-left:50px; margin-bottom:10px;"></a></td>
+                          <td><a href="/downvote/{{ x.get_key() }}"><img src="static/images/redarrow.png" style="height:20px; width:20px; margin-left:60px; margin-bottom:10px;"></a></td>
+                          <td>{{ x.get_counter()[0] }}</td>
+                      </tr>
+                      <tr><td><a href="/update/{{ x.get_key() }}" class="btn btn-primary px-5 py-3 buttn">Edit</a></td>
+                          <td><a href="/deleteqn/{{ x.get_key() }}" class="btn btn-primary px-5 py-3 buttnred">Delete</a></td>
+                      </tr>
+                  </table>
+                  {% for a in x.get_ans() %}
+                  <p>{{ a[1] }} <br>&mdash; {{ a[0] }}</p>
+
+                  {% endfor %}
+              </div>
+                        <div class="row mt-5">
+              <div class="col-12 text-center">
+                <a href="/ans/{{ x.get_key() }}" class="btn btn-primary px-5 py-3 buttn">Answer</a>
+
+
+              </div>
+            </div>
+                    </div> <!-- cd-faq__content -->
+                </li>
+                {% endfor %}
+
+            </ul> <!-- cd-faq__group -->
+
+            <ul id="mobile" class="cd-faq__group">
+                <li class="cd-faq__title"><h2>Mobile</h2></li>
+                {% for x in mobile %}
+                <li class="cd-faq__item">
+                    <a class="cd-faq__trigger" href="#0" ><span>{{ x.get_question() }}<br>Asked by : {{ x.get_firstName()}} </span></a>
+                    <div class="cd-faq__content">
+              <div class="text-component">
+                  <table>
+                      <tr><td><a href="/upvote/{{ x.get_key() }}"><img src="static/images/greenarrow.png" style="height:20px; width:20px; margin-left:50px; margin-bottom:10px;"></a></td>
+                          <td><a href="/downvote/{{ x.get_key() }}"><img src="static/images/redarrow.png" style="height:20px; width:20px; margin-left:60px; margin-bottom:10px;"></a></td>
+                          <td>{{ x.get_counter()[0] }}</td>
+                      </tr>
+                      <tr><td><a href="/update/{{ x.get_key() }}" class="btn btn-primary px-5 py-3 buttn">Edit</a></td>
+                          <td><a href="/deleteqn/{{ x.get_key() }}" class="btn btn-primary px-5 py-3 buttnred">Delete</a></td>
+                      </tr>
+                  </table>
+                  {% for a in x.get_ans() %}
+                  <p>{{ a[1] }} <br>&mdash; {{ a[0] }}</p>
+
+                  {% endfor %}
+
+              </div>
+                        <div class="row mt-5">
+              <div class="col-12 text-center">
+                <a href="/ans/{{ x.get_key() }}" class="btn btn-primary px-5 py-3 buttn">answer</a>
+
+              </div>
+            </div>
+                    </div> <!-- cd-faq__content -->
+                </li>
+                {% endfor %}
+
+
+            </ul> <!-- cd-faq__group -->
+
+            <ul id="account" class="cd-faq__group">
+                <li class="cd-faq__title"><h2>Account</h2></li>
+                {% for x in account %}
+                <li class="cd-faq__item">
+                    <a class="cd-faq__trigger" href="#0"><span>{{ x.get_question() }}<br>Asked by : {{ x.get_firstName()}}</span></a>
+                    <div class="cd-faq__content">
+              <div class="text-component">
+                  <table>
+                      <tr><td><a href="/upvote/{{ x.get_key() }}"><img src="static/images/greenarrow.png" style="height:20px; width:20px; margin-left:50px; margin-bottom:10px;"></a></td>
+                          <td><a href="/downvote/{{ x.get_key() }}"><img src="static/images/redarrow.png" style="height:20px; width:20px; margin-left:60px; margin-bottom:10px;"></a></td>
+                          <td>{{ x.get_counter()[0] }}</td>
+                      </tr>
+                      <tr><td><a href="/update/{{ x.get_key() }}" class="btn btn-primary px-5 py-3 buttn">edit</a></td>
+                          <td><a href="/deleteqn/{{ x.get_key() }}" class="btn btn-primary px-5 py-3 buttnred">delete</a></td>
+                      </tr>
+                  </table>
+                  {% for a in x.get_ans() %}
+                  <p>{{ a[1] }} <br>&mdash; {{ a[0] }}</p>
+
+                  {% endfor %}
+              </div>
+                        <div class="row mt-5">
+              <div class="col-12 text-center">
+                <a href="/ans/{{ x.get_key() }}" class="btn btn-primary px-5 py-3 buttn">answer</a>
+
+              </div>
+            </div>
+                    </div> <!-- cd-faq__content -->
+                </li>
+                {% endfor %}
+
+
+            </ul> <!-- cd-faq__group -->
+
+            <ul id="payments" class="cd-faq__group">
+                <li class="cd-faq__title"><h2>Payments</h2></li>
+                {% for x in payment %}
+                <li class="cd-faq__item">
+                    <a class="cd-faq__trigger" href="#0"><span>{{ x.get_question() }}<br>Asked by : {{ x.get_firstName()}}</span></a>
+                    <div class="cd-faq__content">
+              <div class="text-component">
+                  <table>
+                      <tr><td><a href="/upvote/{{ x.get_key() }}"><img src="static/images/greenarrow.png" style="height:20px; width:20px; margin-left:50px; margin-bottom:10px;"></a></td>
+                          <td><a href="/downvote/{{ x.get_key() }}"><img src="static/images/redarrow.png" style="height:20px; width:20px; margin-left:60px; margin-bottom:10px;"></a></td>
+                          <td>{{ x.get_counter()[0] }}</td>
+                      </tr>
+                      <tr><td><a href="/update/{{ x.get_key() }}" class="btn btn-primary px-5 py-3 buttn">edit</a></td>
+                          <td><a href="/deleteqn/{{ x.get_key() }}" class="btn btn-primary px-5 py-3 buttnred">delete</a></td>
+                      </tr>
+                  </table>
+                  {% for a in x.get_ans() %}
+                  <p>{{ a[1] }} <br>&mdash; {{ a[0] }}</p>
+
+                  {% endfor %}
+              </div>
+                        <div class="row mt-5">
+              <div class="col-12 text-center">
+                <a href="/ans/{{ x.get_key() }}" class="btn btn-primary px-5 py-3 buttn">answer</a>
+
+              </div>
+            </div>
+                    </div> <!-- cd-faq__content -->
+                </li>
+                {% endfor %}
+
+
+            </ul> <!-- cd-faq__group -->
+
+            <ul id="privacy" class="cd-faq__group">
+                <li class="cd-faq__title"><h2>Privacy</h2></li>
+                {% for x in privacy %}
+                <li class="cd-faq__item">
+                    <a class="cd-faq__trigger" href="#0"><span>{{ x.get_question() }}<br>Asked by : {{ x.get_firstName()}} </span></a>
+                    <div class="cd-faq__content">
+              <div class="text-component">
+                  <table>
+                      <tr><td><a href="/upvote/{{ x.get_key() }}"><img src="static/images/greenarrow.png" style="height:20px; width:20px; margin-left:50px; margin-bottom:10px;"></a></td>
+                          <td><a href="/downvote/{{ x.get_key() }}"><img src="static/images/redarrow.png" style="height:20px; width:20px; margin-left:60px; margin-bottom:10px;"></a></td>
+                          <td>{{ x.get_counter()[0] }}</td>
+                      </tr>
+                      <tr><td><a href="/update/{{ x.get_key() }}" class="btn btn-primary px-5 py-3 buttn">edit</a></td>
+                          <td><a href="/deleteqn/{{ x.get_key() }}" class="btn btn-primary px-5 py-3 buttnred">delete</a></td>
+                      </tr>
+                  </table>
+                  {% for a in x.get_ans() %}
+                  <p>{{ a[1] }} <br>&mdash; {{ a[0] }}</p>
+
+                  {% endfor %}
+              </div>
+                        <div class="row mt-5">
+              <div class="col-12 text-center">
+                <a href="/ans/{{ x.get_key() }}" class="btn btn-primary px-5 py-3 buttn">answer</a>
+
+              </div>
+            </div>
+                    </div> <!-- cd-faq__content -->
+                </li>
+                {% endfor %}
+
+
+            </ul> <!-- cd-faq__group -->
+
+            <ul id="delivery" class="cd-faq__group">
+                <li class="cd-faq__title"><h2>Delivery</h2></li>
+                {% for x in delivery %}
+                <li class="cd-faq__item">
+                    <a class="cd-faq__trigger" href="#0"><span>{{ x.get_question() }}<br>Asked by : {{ x.get_firstName()}} </span></a>
+                    <div class="cd-faq__content">
+              <div class="text-component">
+                  <table>
+                      <tr><td><a href="/upvote/{{ x.get_key() }}"><img src="static/images/greenarrow.png" style="height:20px; width:20px; margin-left:50px; margin-bottom:10px;"></a></td>
+                          <td><a href="/downvote/{{ x.get_key() }}"><img src="static/images/redarrow.png" style="height:20px; width:20px; margin-left:60px; margin-bottom:10px;"></a></td>
+                          <td>{{ x.get_counter()[0] }}</td>
+                      </tr>
+
+                      <tr><td><a href="/update/{{ x.get_key() }}" class="btn btn-primary px-5 py-3 buttn">edit</a></td>
+                          <td><a href="/deleteqn/{{ x.get_key() }}" class="btn btn-primary px-5 py-3 buttnred">delete</a></td>
+                      </tr>
+
+                  </table>
+
+                  {% for a in x.get_ans() %}
+                  <p>{{ a[1] }} <br>&mdash; {{ a[0] }}</p>
+
+                  {% endfor %}
+              </div>
+
+                        <div class="row mt-5">
+              <div class="col-12 text-center">
+                <a href="/ans/{{ x.get_key() }}" class="btn btn-primary px-5 py-3 buttn">answer</a>
+
+              </div>
+            </div>
+                    </div> <!-- cd-faq__content -->
+                </li>
+                {% endfor %}
+            </ul> <!-- cd-faq__group -->
+        </div> <!-- cd-faq__items -->
+
+        <a href="#0" class="cd-faq__close-panel text-replace">Close</a>
+
+      <div class="cd-faq__overlay" aria-hidden="true"></div>
+    </section> <!-- cd-faq -->
+
+
+    <div class="row mt-5">
+      <div class="col-12 text-center">
+        <a href="/createQn" class="btn btn-primary px-5 py-3 buttn">feedback</a>
+      </div>
+    </div>
+
+
+  </div>
+ <!-- util functions included in the CodyHouse framework -->
+
+<script src="/static/assets/js/util.js"></script> <!-- util functions included in the CodyHouse framework -->
+<script src="/static/assets/js/main.js"></script>
+
+{% endblock %}
+
+

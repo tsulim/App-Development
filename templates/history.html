@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Tr3yway - History{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/historyCSS.css') }}">
+
+<div>
+  {% if count == 0 %}
+  <h1 style="text-align:center;color:black;">There are no orders.</h1>
+  {% elif count == 1 %}
+  <h1 style="text-align:center;color:black;">There is 1 order.</h1>
+  {% else %}
+  <h1 style="text-align:center;color:black;">There are {{ count }} orders.</h1>
+  {% endif %}
+</div>
+
+<div>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th style="text-align:center;">Order Number</th>
+        <th style="text-align:center;">Date of Purchase</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for Order in orderList %}
+      <tr>
+          <td style="text-align:center;"><a href="/historyDetails/{{Order.get_orderID()}}">{{ Order.get_orderID() }}</a></td> <!-- Order Number !-->
+          <td style="text-align:center;">{{ Order.get_date() }}</td>
+      </tr>
+    </tbody>
+    {% endfor %}
+  </table>
+</div>
+
+{% endblock %}

@@ -1,0 +1,95 @@
+
+.orderHistoryDiv{
+ border-style: solid;
+ border-color:#00ffff;
+ border-radius: 16px;
+}
+.orderHistoryHeader{
+ padding-left:10px;
+ color:black;
+}
+.details{
+ color: black;
+ margin-left:100px;
+}
+textarea{
+ width:170px;
+ height:26px;
+ overflow: hidden;
+ resize:none;
+ border-color:#00ffff;
+ border-radius: 4px;
+}
+.textareaMargin1{
+ position:absolute;
+ margin-left: 36.5px;
+ text-align:center;
+}
+.textareaMargin2{
+ position:absolute;
+ margin-left: 21px;
+ text-align:center;
+}
+.textareaMargin3{
+ position:absolute;
+ margin-left: 85px;
+ text-align:center;
+}
+.textareaMargin4{
+ position:absolute;
+ margin-left: 41px;
+ text-align:center;
+}
+.textareaMargin5{
+ position:absolute;
+ margin-left: 10px;
+ font-size: 12px;
+}
+.shippingAddr{
+ padding-bottom:6.5px;
+}
+.tableStatus{
+ text-align:center;
+ margin-top:80px;
+ width:1000px;
+ margin-right:auto;
+ margin-left:auto;
+}
+.trackingHistoryHeader{
+ font-size: 23px;
+ color: black;
+}
+tr:nth-child(even){
+background-color: #f2f2f2;
+}
+#myProgress{
+ width: 100%;
+ background-color: #ddd;
+ margin-right:auto;
+ margin-left:auto;
+}
+#myBar30{
+  width: 30%;
+  height: 30px;
+  background-color: #00ffff;
+  text-align: center;
+  line-height: 30px;
+  color: white;
+}
+#myBar60{
+  width: 60%;
+  height: 30px;
+  background-color: #00ffff;
+  text-align: center;
+  line-height: 30px;
+  color: white;
+}
+#myBar100{
+  width: 100%;
+  height: 30px;
+  background-color: #00ffff;
+  text-align: center;
+  line-height: 30px;
+  color: white;
+}
+

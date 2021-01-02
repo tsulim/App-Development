@@ -1,0 +1,204 @@
+{% extends "base.html" %}
+{% block title %}Tr3yway - Checkout{% endblock %}
+
+{% block content %}
+{% from "includes/_formHelper.html" import render_field %}
+<div class="site-wrap">
+    <div class="bg-light py-3">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 mb-0">
+                    <a href="/">Home</a> <span class="mx-2 mb-0">/</span>
+                    <strong class="text-black">Checkout</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="site-section">
+        <div class="container">
+            {% if current_user.is_authenticated %}
+            {% else %}
+            <div class="row mb-5">
+                <div class="col-md-12">
+                    <div class="bg-light rounded p-3">
+                        <p class="mb-0">Returning customer? <a href="/login" class="d-inline-block">Click here</a> to login</p>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            <div class="row">
+                <div class="col-md-6 mb-5 mb-md-0">
+                    <h2 class="h3 mb-3 text-black">Your Order</h2>
+                    <div class="p-3 p-lg-5 border">
+                        <table class="table site-block-order-table mb-5">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for book in orderList %}
+                                <tr>
+                                    <td>{{ book.get_title() }}<strong class="mx-2">x</strong> {{ book.get_quantity() }}</td>
+                                    <td>${{ "%.2f" | format(book.get_total_cost()) }}</td>
+                                </tr>
+                            {% endfor %}
+                                <tr>
+                                    <td class="text-black font-weight-bold"><strong>Order Total</strong></td>
+                                    <td class="text-black font-weight-bold">$<span id="overallprice">{{ "%.2f" | format(overall_price) }}</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <br>
+                    {% if current_user.is_authenticated %}
+                    <h2 class="h3 mb-3 text-black">Other Addresses</h2>
+                    <div class="p-3 p-lg-5 border">
+                        <!--<div style="text-align:center;">-->
+                            <!--<p>Name</p>-->
+                            <!--<p>Address</p>-->
+                            <!--<p>Country</p>-->
+                            <!--<p>City</p>-->
+                            <!--<p>State</p>-->
+                            <!--<p>Mobile</p>-->
+                            <!--<input type="button" value="Delivery to this address" class="btn btn-primary px-3 py-1 height-auto" style="width:80%; margin-bottom: 1%;">-->
+                            <!--<a href="#" class="btn btn-warning px-2 py-1 height-auto" style="width:39%;margin-left:10%;float:left;">Edit</a>-->
+                            <!--<a href="#" class="btn btn-danger px-2 py-1 height-auto" style="width:39%;margin-left:51%;">Remove</a>-->
+                        <!--</div>-->
+                        <!--<br>-->
+
+                        {% if AddressList %}
+                            {% for address in AddressList %}
+                                <div style="text-align:center;">
+                                    <p>{{ address.get_firstname() }} {{ address.get_lastname() }}</p>
+                                    <p>{{ address.get_address() }}</p>
+                                    <p>{{ address.get_country() }}</p>
+                                    <p>{{ address.get_city() }}</p>
+                                    <p>{{ address.get_state() }}</p>
+                                    <p>{{ address.get_postalcode() }}</p>
+                                    <p>Phone: {{ address.get_mobile() }}</p>
+                                    <form>
+                                        <input type="submit" value="Delivery to this address" formmethod="post" formaction="{{url_for('changeaddress',addressid=address.get_addressID())}}" class="btn btn-primary px-3 py-1 height-auto" style="width:80%; margin-bottom: 1%;">
+                                        <a href="{{url_for('editaddress', addressid = address.get_addressID() )}}" class="btn btn-warning px-2 py-1 height-auto" style="width:39%;margin-left:10%;float:left;">Edit</a>
+                                        <input type="submit" value="Remove" formaction="{{ url_for('deleteaddress', addressid = address.get_addressID() )}}" class="btn btn-danger px-2 py-1 height-auto" style="width:39%;margin-right:8%;" onclick="return confirm('Are you sure you want to remove this item?');">
+                                    </form>
+                                </div>
+                                <br>
+                            {% endfor %}
+                        {% else %}
+                            <p>No Other Addresses Recorded</p>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="col-md-6">
+                    <div class="row mb-5">
+                        <div class="col-md-12">
+                            <h2 class="h3 mb-3 text-black">Payment Method</h2>
+                            <div class="p-3 p-lg-5 border">
+
+                                <!--    Paypal Sandbox    -->
+                                <!--<script src="https://www.paypal.com/sdk/js?client-id=AecpOAA35EpPnoCUv95bAzqvYNxSxzyNnYsgMpevKNxsMwi1pV_dUsZwKbF7ZKCq03SMEoZNFIXkSbAy&currency=SGD"></script>-->
+
+                                <!--&lt;!&ndash; Required. Replace SB_CLIENT_ID with your sandbox client ID.&ndash;&gt;-->
+
+                                <!--<div id="paypal-button-container"></div>-->
+                                <!--<script>-->
+                                    <!--var overall_price = document.getElementById("overallprice").innerHTML;-->
+                                    <!--paypal.Buttons({-->
+                                        <!--createOrder: function(data, actions){-->
+
+                                    <!--&lt;!&ndash;  This function sets up the details of the transaction, including the amount and line item details.  &ndash;&gt;-->
+
+                                            <!--return actions.order.create({-->
+                                                <!--purchase_units: [{-->
+                                                    <!--amount: {-->
+                                                        <!--value: overall_price-->
+                                                    <!--}-->
+                                                <!--}]-->
+                                            <!--});-->
+                                        <!--},-->
+                                        <!--&lt;!&ndash;onApprove: function(data, actions) {&ndash;&gt;-->
+                                            <!--&lt;!&ndash;return actions.order.capture().then(function(details) {&ndash;&gt;-->
+                                                <!--&lt;!&ndash;alert('Transaction completed by ' + details.payer.name.given_name);&ndash;&gt;-->
+                                                <!--&lt;!&ndash;&lt;!&ndash;Call your server to save the transaction&ndash;&gt;&ndash;&gt;-->
+                                                <!--&lt;!&ndash;return fetch('/paypal-transaction-complete', {&ndash;&gt;-->
+                                                    <!--&lt;!&ndash;method: 'post',&ndash;&gt;-->
+                                                    <!--&lt;!&ndash;headers: {&ndash;&gt;-->
+                                                        <!--&lt;!&ndash;'content-type': 'application/json'&ndash;&gt;-->
+                                                    <!--&lt;!&ndash;},&ndash;&gt;-->
+                                                    <!--&lt;!&ndash;body: JSON.stringify({&ndash;&gt;-->
+                                                        <!--&lt;!&ndash;orderID: data.orderID&ndash;&gt;-->
+                                                    <!--&lt;!&ndash;})&ndash;&gt;-->
+                                                <!--&lt;!&ndash;});&ndash;&gt;-->
+                                            <!--&lt;!&ndash;});&ndash;&gt;-->
+                                        <!--&lt;!&ndash;}&ndash;&gt;-->
+                                    <!--}).render('#paypal-button-container');-->
+                                    <!--&lt;!&ndash; This function displays Smart Payment Buttons on your web page. &ndash;&gt;-->
+                                <!--</script>-->
+
+
+                                <!--<div class="border mb-3">-->
+                                    <!--<h3 class="h6 mb-0"><a class="d-block" data-toggle="collapse" href="#collapsebank" role="button"-->
+                                    <!--aria-expanded="false" aria-controls="collapsebank">Visa/MasterCard</a></h3>-->
+
+                                    <!--<div class="collapse" id="collapsebank">-->
+                                        <div class="py-2 px-4">
+                                            <form method="POST">
+                                                <div class="form-group">
+                                                    {{ render_field(form.cardtype, class="form-check") }}
+                                                </div>
+                                                <div class="form-group">
+                                                    {{ render_field(form.cardnumber, size=16, class="form-control") }}
+                                                </div>
+                                                <div class="form-group">
+                                                    {{ render_field(form.expirydate, class="form-control") }}
+                                                </div>
+                                                <div class="form-group">
+                                                    {{ render_field(form.CVV ,class="form-control") }}
+                                                </div>
+                                                <div class="form-group">
+                                                    {{ render_field(form.firstName ,class="form-control") }}
+                                                </div>
+                                                <div class="form-group">
+                                                    {{ render_field(form.lastName ,class="form-control") }}
+                                                </div>
+                                                <div class="form-group">
+                                                    {{ render_field(form.country ,class="form-control") }}
+                                                </div>
+                                                <div class="form-group">
+                                                    {{ render_field(form.address ,class="form-control") }}
+                                                </div>
+                                                <div class="form-group">
+                                                    {{ render_field(form.city ,class="form-control") }}
+                                                </div>
+                                                <div class="form-group">
+                                                    {{ render_field(form.state ,class="form-control") }}
+                                                </div>
+                                                <div class="form-group">
+                                                    {{ render_field(form.zipcode ,class="form-control") }}
+                                                </div>
+                                                <div class="form-group">
+                                                    {{ render_field(form.mobile ,class="form-control") }}
+                                                </div>
+                                                <div class="form-group">
+                                                    {{ render_field(form.email ,class="form-control") }}
+                                                </div>
+                                                <input type="submit" formaction="/checkout" value="Submit" class="btn btn-primary"/>
+                                            </form>
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

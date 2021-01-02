@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}Tr3yway - Search Results{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/deliveryCSS.css') }}">
+
+
+<h2>Search Results: {{ orderInput }}</h2>
+
+{% if requestedOrder %}
+<p>Order is found</p>
+{% elif requestedOrder == None %}
+<p>Order is invalid!</p>
+{% endif %}
+
+<form method="POST">
+  <input type="text" id="search" class="form-control" name="orderInput" placeholder="Search keyword and hit enter...">
+</form>
+<br>
+<br>
+<br>
+<div>
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th style="text-align:center;">User ID</th>
+      <th style="text-align:center;">Order ID</th>
+      <th style="text-align:center;">Date of Purchase</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% if requestedOrder %}
+    <tr>
+      <td style="text-align:center;">{{ requestedOrder.get_userID() }}</td>
+      <td style="text-align:center;"><a href="/deliveryUpdate/{{requestedOrder.get_deliveryID()}}">{{ requestedOrder.get_orderID() }}</a></td> <!-- Order Number !-->
+      <td style="text-align:center;">{{ requestedOrder.get_date() }}</td>
+    </tr>
+    {% else %}
+      {% for order in ListOrder %}
+        <tr>
+          <td style="text-align:center;">{{ order.get_userID() }}</td>
+          <td style="text-align:center;"><a href="/deliveryUpdate/{{order.get_deliveryID()}}">{{ order.get_orderID() }}</a></td> <!-- Order Number !-->
+          <td style="text-align:center;">{{ order.get_date() }}</td>
+        </tr>
+      {% endfor %}
+
+    {% endif %}
+    </tbody>
+  </table>
+
+{% endblock %}

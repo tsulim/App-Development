@@ -1,0 +1,39 @@
+.orderHistory{
+ background-color: #b3b3b3;
+ color: black;
+}
+.details{
+ color: black;
+ margin-left:100px;
+}
+textarea{
+ width:170px;
+ height:26px;
+ overflow: hidden;
+}
+.textareaMargin1{
+ position:absolute;
+ margin-left:32.5px;
+}
+.textareaMargin2{
+ position:absolute;
+ margin-left:18px;
+}
+.textareaMargin3{
+ position:absolute;
+ margin-left: 81.5px;
+}
+.textareaMargin4{
+ position:absolute;
+ margin-left: 38px;
+}
+.textareaMargin5{
+ position:absolute;
+ margin-left: 6.5px;
+}
+.shippingAddr{
+ padding-bottom:5px;
+}
+
+
+

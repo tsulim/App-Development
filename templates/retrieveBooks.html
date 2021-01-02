@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block title %}Retrieve Books{% endblock %}
+
+{% block content %}
+<div class="site-wrap">
+    <div class="bg-light py-3">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 mb-0">
+                    <a href="/">Home</a> <span class="mx-2 mb-0">/</span>
+                    <strong class="text-black">Book Storage</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <h1 class="display-4">Book Storage</h1>
+
+    <div>
+     <p>
+     {% if count == 0 %}
+         There are no books.
+     {% elif count == 1 %}
+         There is 1 book.
+     {% else %}
+         There are {{ count }} books.
+     {% endif %}
+        <a href="/createBook" style="float:right;" class="btn btn-primary">Create Book</a>
+     </p>
+    </div>
+
+
+    <div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Book ID</th>
+                    <th>Book Image</th>
+                    <th>Book Name</th>
+                    <th>Author</th>
+                    <th>Price</th>
+                    <th>Genre</th>
+                    <th>Stock</th>
+                    <th>Summary</th>
+                    <th></th>
+                    <th></th>
+                    </tr>
+            </thead>
+            <tbody>
+            {% for book in bookList %}
+                <tr>
+                    <td>{{ book.get_bookID() }}</td>
+                    <td><img src="static/uploads/{{ book.get_image() }}" alt="Image" class="img-fluid p-5"></td>
+                    <td>{{ book.get_bookName() }}</td>
+                    <td>{{ book.get_author() }}</td>
+                    <td>${{ "%.2f" | format(book.get_price()) }}</td>
+                    <td>{{ book.get_genre() }}</td>
+                    <td>{{ book.get_stock() }}</td>
+                    <td>{{ book.get_summary() }}</td>
+                    <td><a href="/updateBook/{{book.get_bookID()}}" class="btn btn-warning">Update</a></td>
+                    <td>
+                        <form action="{{url_for('deleteBook', id=book.get_bookID())}}" method="POST">
+                            <input type="submit" value="Delete" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this book?');">
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}
+

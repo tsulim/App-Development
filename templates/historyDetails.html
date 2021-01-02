@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% block title %}Tr3yway - History{% endblock %}
+
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/historyDetailsCSS.css') }}">
+
+    <div class="orderHistoryDiv">
+        <h1 class="orderHistoryHeader">Order History</h1>
+        <div class="details">
+            <div>
+                <p>Order Number
+                <textarea class="textareaMargin1" readonly>{{ singleorder.get_orderID() }}</textarea>
+                </p>
+            </div>
+            <div>
+                <p>Order Placed On
+                    <textarea class="textareaMargin2" readonly>{{ singleorder.get_date() }} &nbsp,&nbsp {{ singleorder.get_time() }}</textarea>
+                </p>
+            </div>
+            <div>
+                <p>Paid By
+                <textarea class="textareaMargin3" readonly>{{ singleorder.get_paymentmethod() }}</textarea>
+                </p>
+            </div>
+            <div>
+                <p>Total Amount
+                <textarea class="textareaMargin4" readonly>${{ "%.2f" | format(singleorder.get_overall_cost()) }}</textarea>
+                </p>
+            </div>
+
+           <div>
+             <p class="shippingAddr">Shipping Address
+               <textarea class="textareaMargin5" style="width:20%;" readonly>{{ singleorder.get_address() }}</textarea>
+             </p>
+           </div>
+
+        </div>
+    </div>
+
+<div>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Book ID</th>
+        <th>Book Name</th>
+        <th>Quantity</th>
+        <th>Total Amount</th>
+      </tr>
+
+    </thead>
+    <tbody>
+    {% for book in bkorderDetails %}
+      <tr>
+        <td>{{ book.get_orderbkID() }}</td>
+        <td>{{ book.get_title() }}</td>
+        <td>{{ book.get_quantity() }}</td>
+        <td>${{ "%.2f" | format(book.get_total_cost()) }}</td>
+
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<div>
+  <table class="tableStatus" border="1">
+      <tr>
+          <th>
+              <div>
+                  {% if orderStatus == "Processing" %}
+                  <div id="myProgress">
+                      <div id="myBar30">Processing..</div>
+                  </div>
+                  {% elif orderStatus == "Delivering" %}
+                  <div id="myProgress">
+                      <div id="myBar60">Delivering..</div>
+                  </div>
+                  {% elif orderStatus == "Delivered" %}
+                  <div id="myProgress">
+                      <div id="myBar100">Delivered</div>
+                  </div>
+                  {% endif %}
+                  </div>
+          </th>
+      </tr>
+  <tr>
+    <th class="trackingHistoryHeader">Tracking History</th>
+  </tr>
+      {% if statusList %}
+      {% for status in statusList %}
+  <tr>
+    <td>[{{ status.get_date() }} , {{ status.get_time() }}] :&nbsp{{ status.get_status() }}</td>
+  </tr>
+      {% endfor %}
+      {% endif %}
+    </table>
+</div>
+
+{% endblock %}

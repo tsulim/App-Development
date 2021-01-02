@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Tr3yway - Search Results{% endblock %}
+
+{% block content %}
+<div class="site-wrap">
+    <div class="bg-light py-3">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 mb-0">
+                    <a href="/">Home</a> <span class="mx-2 mb-0">/</span>
+                    <strong class="text-black">Search Results</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+  <h2>Search Results: {{ search }}</h2>
+
+  <form method="POST" action="">
+    <input type="text" id="search" class="form-control" name="search" placeholder="Search keyword and hit enter...">
+  </form>
+  <!--<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">-->
+
+  <table id="myTable">
+    <tr class="header">
+      <th style="width:10%;">Image</th>
+      <th style="width:20%;">Book Name</th>
+      <th style="width:10%;">Author</th>
+      <th style="width:50%;">Book Description</th>
+      <th style="width:10%;">Book Price</th>
+    </tr>
+    {% for result in searchresults %}
+    <tr>
+      <td><img src="../static/uploads/{{ result.get_image() }}" alt="Image" class="img-fluid"></td>
+      <td><a href="/single/{{ result.get_bookID() }}">{{ result.get_bookName() }}</a></td>
+      <td>{{ result.get_author() }}</td>
+      <td>{{ result.get_summary() }}</td>
+      <td>{{ result.get_price() }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+
+</div>
+{% endblock %}

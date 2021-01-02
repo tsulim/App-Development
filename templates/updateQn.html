@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+{% block title %}Library Loan System - Home{% endblock %}
+
+{% block content %}
+
+ <style>
+   .button2 {
+  background-color: white;
+  color: black;
+  border: 2px solid #008CBA;
+  border-radius:5px;
+  padding: 16px 32px;
+  text-align: center;
+  margin: 4px 2px;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+
+.button2:hover {
+  background-color: #008CBA;
+  color: white;
+  border: 2px solid black;
+  border-radius:5px;
+  padding: 16px 32px;
+  text-align: center;
+  margin: 4px 2px;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+
+ </style>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+  <div class="site-wrap">
+
+    <div class="bg-light py-3">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 mb-0">
+            <a href="/">Home</a> <span class="mx-2 mb-0">/</span>
+            <a href="/FAQ">FAQ</a> <span class="mx-2 mb-0">/</span> <strong class="text-black">Update Question</strong></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="site-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <h2 class="h3 mb-5 text-black">Update your question</h2>
+          </div>
+          <div class="col-md-12">
+
+
+
+
+              <div class="p-3 p-lg-5 border">
+                <div class="form-group row">
+                  <div class="col-md-6">
+                      <h3 id="fname">{{ qndetail.get_firstName() }}</h3><h3 id="lname">{{ qndetail.get_lastName() }}</h3>
+                  </div>
+
+                </div>
+
+                <div class="form-group row">
+                  <div class="col-md-12">
+                        <h3 id="key" style="display:none;">{{qndetail.get_key()}}</h3>
+                      <h3 id="qn">{{ qndetail.get_question() }}</h3>
+                  </div>
+                </div>
+
+                  <div class="form-group row">
+                  <div class="col-md-12">
+                      <h3 id="topic" style="display:none;">{{ qndetail.get_topic() }}</h3>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <div class="col-md-12">
+                        <label for="c_message" class="text-black">Type here </label>
+                    <textarea name="c_message" id="c_message" cols="30" rows="7" class="form-control"></textarea>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-lg-12">
+                    <a  onclick="submit()" class="btn btn-primary px-5 py-3">submit</a>
+                  </div>
+                </div>
+              </div>
+
+
+
+
+             <div class="row mt-5">
+          <div class="col-12 text-center">
+            <a href='/faq' class="btn btn-primary px-5 py-3">exit</a>
+
+          </div>
+        </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+<script>
+    function submit(){
+        var qn = document.getElementById('qn').innerHTML;
+        var topic = document.getElementById('topic').innerHTML;
+        var fname = document.getElementById('fname').innerHTML;
+        var lname = document.getElementById('lname').innerHTML;
+        var key = document.getElementById('key').innerHTML;
+        var update = document.getElementById('c_message').value;
+        list = [fname,lname,qn, topic, update, key]
+        var send = JSON.stringify(list);
+        $.post('test', send, function(){});
+        event.preventDefault();
+        document.getElementById('c_message').value = '';
+        window.location.href = '/thanks'
+    }
+</script>
+{% endblock %}

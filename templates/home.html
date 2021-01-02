@@ -1,0 +1,225 @@
+{% extends "base.html" %}
+{% block title %}Tr3yway{% endblock %}
+
+{% block content %}
+    <div class="site-wrap">
+
+
+    <div class="site-blocks-cover" style="background-image: url('/static/images/banner.jpg');">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-7 mx-auto order-lg-2 align-self-center">
+            <div class="site-block-cover-content text-center">
+
+              <h1 style="color:black;">Welcome To Tr3yway</h1>
+
+              <p>
+                <a href="/products" class="btn btn-primary px-5 py-3">Shop Now</a>
+                   <h2 class="sub-title" style="color:black; background-color:rgb(240, 240, 240, 0.5);">Learn more. Educate yourself. Immerse in knowledge</h2>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="site-section">
+      <div class="container">
+        <div class="row align-items-stretch section-overlap">
+          <div class="col-md-6 col-lg-4 mb-4 mb-lg-0">
+            <div class="banner-wrap bg-primary h-100">
+              <a class="h-100">
+                <h5 style="color:black;">Free <br> Shipping</h5>
+                <p style="color:black;">
+                  Treat yourself and your loved ones
+                  <strong style="color:black;">Spreading knowledge across the globe</strong>
+                </p>
+              </a>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-4 mb-4 mb-lg-0">
+            <div class="banner-wrap h-100">
+              <a  class="h-100">
+                <h5 style="color:black;">Season <br> Sale 50% Off</h5>
+                <p style="color:black;">
+                  Christmas came early this year
+                  <strong style="color:black;">Spread the joy of reading at a even cheaper price</strong>
+                </p>
+              </a>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-4 mb-4 mb-lg-0">
+            <div class="banner-wrap bg-warning h-100">
+              <a class="h-100">
+                <h5 style="color:black;">Buy <br> A Gift Card</h5>
+                <p style="color:black;">
+                  Don't know what to give? Fret not my friends
+                  <strong style="color:black;">We have just the solution for you</strong>
+                </p>
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+<!--#u can remove this if u feel that the motto/slogan can read from the banner -->
+       <div class="container">
+        <div class="row">
+          <div class="col-lg-7 mx-auto order-lg-2 align-self-center">
+            <div class="site-block-cover-content text-center">
+
+                   <h1 style="color:black;">Learn more. Educate yourself. Immerse in knowledge.</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+<!--# i leave this section to u xj or if u no time we can just remove popular product :))-->
+    <div class="site-section">
+      <div class="container">
+        <div class="row">
+          <div class="title-section text-center col-12">
+            <h2 class="text-uppercase">Popular Products</h2>
+          </div>
+        </div>
+
+        <div class="row">
+          {% for book in popularList %}
+          <div class="col-sm-6 col-lg-4 text-center item mb-4">
+            <!--<span class="tag">Sale</span>-->
+            <a href="{{ url_for('addtoCart', id=book.get_bookID()) }}">
+              <img src="../static/uploads/{{ book.get_image() }}" alt="Image" class="img-fluid p-5">
+            </a>
+            <h3 class="text-dark">
+              <a href="{{ url_for('addtoCart', id=book.get_bookID()) }}">{{ book.get_bookName() }}</a></h3>
+            <p class="price">${{ "%.2f" | format(book.get_price()) }}</p>
+          </div>
+          {% endfor %}
+        </div>
+
+        <div class="row mt-5">
+          <div class="col-12 text-center">
+            <a href="/products" class="btn btn-primary px-4 py-3">View All Products</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="site-section bg-light">
+      <div class="container">
+        <div class="row">
+          <div class="title-section text-center col-12">
+            <h2 class="text-uppercase">New Products</h2>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 block-3 products-wrap">
+            <div class="nonloop-block-3 owl-carousel">
+
+              {% for book in newList %}
+              <div class="text-center item mb-4">
+                <a href="{{ url_for('addtoCart', id=book.get_bookID()) }}"> <img src="../static/uploads/{{ book.get_image() }}" alt="Image" class="img-fluid p-5"></a>
+                <h3 class="text-dark"><a href="{{ url_for('addtoCart', id=book.get_bookID()) }}">{{ book.get_bookName() }}</a></h3>
+                <p class="price">${{ "%.2f" | format(book.get_price()) }}</p>
+              </div>
+              {% endfor %}
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="site-section">
+      <div class="container">
+        <div class="row">
+          <div class="title-section text-center col-12">
+            <h2 class="text-uppercase">Testimonials</h2>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 block-3 products-wrap">
+            <div class="nonloop-block-3 no-direction owl-carousel">
+
+              <div class="testimony">
+                <blockquote>
+                  <img src="/static/images/person_1.jpg" alt="Image" class="img-fluid w-25 mb-4 rounded-circle">
+                  <p>&ldquo;A really well done site I must say, truly impressive considering this came from a small retail shop. I will surely keep a lookout see how much it will progress in the future.</p>
+                </blockquote>
+
+                <p>&mdash; Kelly Holmes</p>
+              </div>
+
+              <div class="testimony">
+                <blockquote>
+                  <img src="/static/images/person_2.jpg" alt="Image" class="img-fluid w-25 mb-4 rounded-circle">
+                  <p>&ldquo;Remarkable. The books were dutifully and swiftly delivered to my doorstep, the packaging was something out of this world. You can tell that the store cares for their products and customers.&rdquo;</p>
+                </blockquote>
+
+                <p>&mdash; Rebecca Morando</p>
+              </div>
+
+              <div class="testimony">
+                <blockquote>
+                  <img src="/static/images/person_3.jpg" alt="Image" class="img-fluid w-25 mb-4 rounded-circle">
+                  <p>&ldquo;Fast and cheap. I will surely be back for more in the future.&rdquo;</p>
+                </blockquote>
+
+                <p>&mdash; Lucas Gallone</p>
+              </div>
+
+              <div class="testimony">
+                <blockquote>
+                  <img src="/static/images/person_4.jpg" alt="Image" class="img-fluid w-25 mb-4 rounded-circle">
+                  <p>&ldquo;The care poured into their products and service is astounding, I will definitely recommend this to my friends and family. A rare gem on the internet.&rdquo;</p>
+                </blockquote>
+
+                <p>&mdash; Andrew Neel</p>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="site-section bg-secondary bg-image" style="background-image: url('/static/images/background.jpg');">
+      <div class="container">
+        <div class="row align-items-stretch">
+          <div class="col-lg-6 mb-5 mb-lg-0">
+            <a href="#" class="banner-1 h-100 d-flex" style="background-image: url('/static/images/adjust2.jpg');">
+              <div class="banner-1-inner align-self-center">
+                <h2 style="color:black;">Tr3yway Products</h2>
+                <p style="color:black;">We play our part in the fight against global warming by using recycled paper for our books.
+                </p>
+              </div>
+            </a>
+          </div>
+          <div class="col-lg-6 mb-5 mb-lg-0">
+            <a href="#" class="banner-1 h-100 d-flex" style="background-image: url('/static/images/adjust.png');">
+              <div class="banner-1-inner ml-auto  align-self-center">
+                <h2 style="color: black;">High Quality</h2>
+                <p style="color: black;">We only source our books from only the best providers to ensure quality.
+                </p>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+  </div>
+<!--# hihhi under the about us can u change the text to thhis :-->
+<!--Welcome to our humble website, here we offer a plethora of books suitable for all ages. We are sure to have something that will pique your interest. Our motto: Learn more. Educate yourself. Immerse in knowledge.-->
+
+<!--rmbr to change the addresss and stuff lidat (ppaiseh idk how and abit lazy to learn how. thanks xj ur actually carrying this grp super hard thanks again !!!!!! without u we cfm gg.com alr)-->
+
+{% endblock %}
