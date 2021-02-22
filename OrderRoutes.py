@@ -938,8 +938,11 @@ def receipt(id,addressID):
 
     return redirect(url_for('thankyou', pdfFilename = pdfFilename))
 
+import webbrowser
+
 @app.route('/viewreceipt/<pdfFilename>',methods=['GET'])
 def viewreceipt(pdfFilename):
-    os.system(pdfFilename)
+    # os.system(pdfFilename)
+    webbrowser.open(pdfFilename+".pdf")
     return redirect(url_for('thankyou', pdfFilename=pdfFilename))
 
